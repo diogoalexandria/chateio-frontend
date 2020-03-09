@@ -1,9 +1,11 @@
-import React from 'react'
-import { TextField, Typography, Grid, IconButton, Card, CardContent, CardActions } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import React from 'react';
+import { useHistory } from 'react-router-dom'
+import { TextField, Typography, Grid, IconButton, Card, CardContent, CardActions } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { ArrowForward } from '@material-ui/icons/';
 
 export default function Home() {
+    let history = useHistory();
 
     const useStyles = makeStyles({
         text: {
@@ -29,21 +31,21 @@ export default function Home() {
         button:{
             marginTop: '2vh'
         }
-    })
-    const [nickname, setNickname] = React.useState('')
+    });
+    const classes = useStyles();
+
+    const [nickname, setNickname] = React.useState('');
 
     const handleNickame = e => {
-        e.preventDefault()
-        setNickname(e.target.value.replace(' ', ''))
-    }
+        e.preventDefault();
+        setNickname(e.target.value.replace(' ', ''));
+    };
 
     const handleSubmit = e => {
-        e.preventDefault()
+        e.preventDefault();
+        history.push('/chats');
+    };
 
-
-    }
-
-    const classes = useStyles()
     return (
         <React.Fragment className={classes.app}>
             <div className={classes.app}>
@@ -106,4 +108,4 @@ export default function Home() {
             </div>
         </React.Fragment>
     )
-}
+};
