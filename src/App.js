@@ -1,19 +1,41 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Home from './components/Home';
-import ChatsList from './components/ChatsList'
+import ChatRoom from './components/ChatRoom'
+import {connect} from 'react-redux'
+import { makeStyles, Grid } from '@material-ui/core';
 
-function App() {
+function App(props) {
+  const useStyles = makeStyles({
+    app: {
+      minWidth: '100vw',
+      minHeight: '100vh',
+      backgroundColor: '#333333',
+    }
+  })
+  const classes = useStyles()
+
+  if (props.location.pathname === '/'){
+    return <Redirect to='/home' />
+  }
+
   return (
-    <Router>
+    <div className={classes.app}>
+      <Grid container
+        alignItems="center"
+        justify="center">
 
-      <Switch>
-        <Route path="/" exact component={Home}/>
-        <Route path="/chats" component={ChatsList}/>
-      </Switch>
-
-    </Router>
+        <Router>
+          <Switch>
+            <Route path="/home" exact component={() => <Home/>} />
+            <Route path="/chatRoom" component={()=><ChatRoom/>} />
+          </Switch>
+        </Router>
+      </Grid>
+    </div>
   );
 }
 
-export default App;
+
+const mapStateToProps = () => ({})
+export default connect(mapStateToProps)(App);

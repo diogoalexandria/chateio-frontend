@@ -3,10 +3,16 @@ import { useHistory } from 'react-router-dom'
 import { TextField, Typography, Grid, IconButton, Card, CardContent, CardActions } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { ArrowForward } from '@material-ui/icons/';
+import {connect} from 'react-redux'
+import {setUserNickname} from '../redux/actions'
 
-export default function Home() {
+
+
+
+
+function Home(props) {
+    const {setUserNickname} = props
     let history = useHistory();
-
     const useStyles = makeStyles({
         text: {
 
@@ -23,11 +29,6 @@ export default function Home() {
             marginTop: '10vh',
             padding: '10vh'
         },
-        app: {
-            minWidth: '100vw',
-            minHeight: '100vh',
-            backgroundColor: '#333333'
-        },
         button:{
             marginTop: '2vh'
         }
@@ -43,14 +44,12 @@ export default function Home() {
 
     const handleSubmit = e => {
         e.preventDefault();
-        history.push('/chats');
+        setUserNickname(nickname)
+        history.push('/chatRoom');
     };
 
     return (
-        <React.Fragment className={classes.app}>
-            <div className={classes.app}>
-
-
+        <React.Fragment >
                 <Grid container
                     direction="column"
                     justify="center"
@@ -105,7 +104,10 @@ export default function Home() {
                         </Card>
                     </Grid>
                 </Grid>
-            </div>
         </React.Fragment>
     )
 };
+
+const mapStateToProps = ({nickname}) => ({nickname})
+
+export default connect(mapStateToProps, {setUserNickname})(Home)
