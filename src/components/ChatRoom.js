@@ -23,7 +23,9 @@ function ChatRoom(props) {
     const socketPort = 8000
     const socket = io(socketUrl + ':' + socketPort)
     socket.on('connect', () => {
+        console.log('connected with port ' + socketPort + ' on ' + socketUrl)
         socket.emit('connected', { nickname })
+        socket.on('Invalid Nickname')
     })
     const [text, setText] = React.useState('')
     const { nickname } = props
