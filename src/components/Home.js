@@ -1,23 +1,23 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom'
-import { TextField, Typography, Grid, IconButton, Card, CardContent, CardActions } from '@material-ui/core';
+import { TextField, Typography, Grid, IconButton, Card, CardContent, CardActions, Link, Input } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { ArrowForward } from '@material-ui/icons/';
-import {connect} from 'react-redux'
-import {setUserNickname} from '../redux/actions'
-
+import { connect } from 'react-redux'
+import { setUserNickname } from '../redux/actions'
+import passwordHash from 'password-hash'
 
 
 
 
 function Home(props) {
-    const {setUserNickname} = props
+    const { setUserNickname } = props
     let history = useHistory();
     const useStyles = makeStyles({
         text: {
 
         },
-        title:{
+        title: {
             color: 'white',
             fontFamily: 'sans',
             margin: '5vh'
@@ -26,88 +26,133 @@ function Home(props) {
             margin: '2vh'
         },
         card: {
-            marginTop: '10vh',
             padding: '10vh'
         },
-        button:{
+        button: {
             marginTop: '2vh'
+        },
+        form: {
+            margin: '2vh'
         }
     });
     const classes = useStyles();
 
     const [nickname, setNickname] = React.useState('');
+    const [password, setPassword] = React.useState('')
 
     const handleNickame = e => {
         e.preventDefault();
         setNickname(e.target.value.replace(' ', ''));
     };
 
+    const handlePassword = e => {
+        e.preventDefault()
+        setPassword(e.target.value)
+
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
-        setUserNickname(nickname)
-        history.push('/chatRoom');
+
+
     };
+    const handleCadastro = e => {
+        history.push('/cadastro')
+    }
 
     return (
         <React.Fragment >
-                <Grid container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                >
+            <Grid container
+                direction="column"
+                justify="center"
+                alignItems="center"
+            >
 
-                    <Grid item>
-                        <Typography className={classes.title} variant="h2">
-                            CHATEIO
-                        </Typography>
-                    </Grid>
-                    <Grid item>
 
-                        <Card className={classes.card}>
-                            <CardContent>
+                <Grid item>
 
+                    <Card className={classes.card}>
+                        <CardContent>
+
+                            <Grid container
+                                direction="column"
+                                justify="center"
+                                alignItems="center"
+                            >
+                                <Grid item>
+                                    <Typography variant="h4" className={classes.subTitle}> Seja bem-vindo ao ChateIO!</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography className={classes.text}> O maior e melhor chat do mundo feito pelos melhores programadores do mundo!</Typography>
+                                </Grid>
+                                <Grid item>
+                                    <Typography className={classes.text}> Para começar a conversar, digite abaixo o apelido que deseja usar</Typography>
+                                </Grid>
+
+                            </Grid>
+                        </CardContent>
+                        <CardActions>
+                            <Grid container
+                                justify="center"
+                                alignItems="center"
+                                direction="column"
+                            >
+
+                                <form autoComplete="off" className={classes.form} onSubmit={handleSubmit}>
+                                    <Grid container
+                                        direction="row"
+                                        justify="center"
+                                        alignItems="center"
+                                        spacing={5}
+                                    >
+                                        <Grid item>
+
+                                            <Grid container
+                                                direction="column"
+                                                justify="center"
+                                                alignItems="center"
+                                                spacing={2}
+                                            >
+
+                                                <Grid item>
+                                                    <Input onChange={handleNickame} value={nickname} placeholder="Nickname" />
+                                                </Grid>
+                                                <Grid item>
+                                                    <Input onChange={handlePassword} value={password} placeholder="Password" type='password' />
+                                                </Grid>
+
+                                            </Grid>
+                                        </Grid>
+                                        <Grid item>
+                                            <IconButton className={classes.button} onClick={handleSubmit}>
+                                                <ArrowForward />
+                                            </IconButton>
+                                        </Grid>
+                                    </Grid>
+                                </form>
                                 <Grid container
-                                    direction="column"
-                                    justify="center"
                                     alignItems="center"
+                                    justify="center"
+                                    direction="row"
+                                    spacing={1}
                                 >
                                     <Grid item>
-                                        <Typography variant="h4" className={classes.subTitle}> Seja bem-vindo ao ChateIO!</Typography>
+                                        <Typography>Ainda não é cadastrado?</Typography>
                                     </Grid>
                                     <Grid item>
-                                        <Typography className={classes.text}> O maior e melhor chat do mundo feito pelos melhores programadores do mundo!</Typography>
-                                    </Grid>
-                                    <Grid item>
-                                        <Typography className={classes.text}> Para começar a conversar, digite abaixo o apelido que deseja usar</Typography>
-                                    </Grid>
-
-                                </Grid>
-                            </CardContent>
-                            <CardActions>
-                                <Grid container
-                                    direction="row"
-                                    justify="center"
-                                    alignItems="center">
-
-                                    <Grid item>
-                                        <TextField onChange={handleNickame} value={nickname} label="Nickname" />
-                                    </Grid>
-
-                                    <Grid item>
-                                        <IconButton onClick={handleSubmit} className={classes.button}>
-                                            <ArrowForward />
-                                        </IconButton>
+                                        <Link onClick={handleCadastro}>Cadastre-se!</Link>
                                     </Grid>
                                 </Grid>
-                            </CardActions>
+                            </Grid>
+                        </CardActions>
 
-                        </Card>
-                    </Grid>
+                    </Card>
                 </Grid>
-        </React.Fragment>
+            </Grid>
+        </React.Fragment >
     )
 };
 
-const mapStateToProps = ({nickname}) => ({nickname})
+const mapStateToProps = ({ nickname }) => ({ nickname })
 
-export default connect(mapStateToProps, {setUserNickname})(Home)
+export default connect(mapStateToProps, { setUserNickname })(Home)
