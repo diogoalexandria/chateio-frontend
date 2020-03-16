@@ -4,14 +4,14 @@ import { TextField, Typography, Grid, IconButton, Card, CardContent, CardActions
 import { makeStyles } from '@material-ui/core/styles';
 import { ArrowForward } from '@material-ui/icons/';
 import { connect } from 'react-redux'
-import { setUserNickname } from '../redux/actions'
-import passwordHash from 'password-hash'
-
+import { setUserNickname, setUserLogged } from '../redux/actions'
+import axios from 'axios'
+// import bcrypt from 'bcrypt'
 
 
 
 function Home(props) {
-    const { setUserNickname } = props
+    const { setUserNickname, setUserLogged } = props
     let history = useHistory();
     const useStyles = makeStyles({
         text: {
@@ -53,7 +53,31 @@ function Home(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
-
+        // let hashPassword = ""
+        // bcrypt.hash(password, 10, (err,hash) => {
+        //     hashPassword = hash
+        // })
+        // console.log(hashPassword)
+        let data = {
+            nickname: nickname,
+            // password: hashPassword
+        }
+        let axios_url = process.env.REACT_APP_AXIOS_BASE_URL
+        console.log(axios_url)
+        axios.post('http://192.168.1.67:3333/login', data)
+            .then((res) => {
+                //TODO: LOGIN SUCCESSFUL
+                setUserLogged(true)
+                console.log('sucessfull', res)
+            })
+            .catch(res => {
+                //TODO: LOGIN FAILED
+                console.log('failed', res)
+            })
+            .then(res => {
+                //TODO: LOGIN CALLBACK
+                console.log('always', res)
+            })
 
     };
     const handleCadastro = e => {
@@ -153,6 +177,6 @@ function Home(props) {
     )
 };
 
-const mapStateToProps = ({ nickname }) => ({ nickname })
+const mapStateToProps = ({ nickname, userLogged }) => ({ nickname, userLogged })
 
-export default connect(mapStateToProps, { setUserNickname })(Home)
+export default connect(mapStateToProps, { setUserNickname, setUserLogged })(Home)

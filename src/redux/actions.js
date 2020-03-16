@@ -1,5 +1,6 @@
-import {setUserNickname} from './home/actions'
+import {setUserNickname, setUserLogged} from './login/actions'
 
 export {
+    setUserLogged,
     setUserNickname
 }

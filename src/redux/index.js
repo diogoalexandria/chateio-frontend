@@ -1,9 +1,9 @@
 import {combineReducers} from 'redux'
 
-import nickname from './home/reducer'
+import login from './login/reducer'
 
 const reducers = combineReducers({
-    nickname
+    login
 })
 
 export default reducers

@@ -11,7 +11,7 @@ import {
     makeStyles,
     Button
 } from '@material-ui/core'
-import passwordHash from 'password-hash'
+import bcrypt from 'bcrypt'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 
@@ -56,27 +56,32 @@ function Cadastro(props) {
     }
 
     const handleSubmit = e => {
+        // let hashPassword = ""
+        // bcrypt.hash(password, 10, (err,hash) => {
+        //     hashPassword = hash
+        // })
+        // console.log(hashPassword)
         const data = {
             "nickname": nickname,
-            "password": passwordHash.generate(password),
+            // "password": hashPassword,
             "email": email
         }
         const axios_url = process.env.REACT_APP_AXIOS_BASE_URL
         const axios_port = process.env.REACT_APP_AXIOS_PORT
-        console.log(data)
         // console.log(axios_url + axios_port)
-        axios.post('localhost:3333/register', data)
+        axios.post('http://192.168.1.67:3333/register', data)
             .then((res) => {
                 //sucedido
-                history.push('/home')
+                console.log('sucessful',res)
+                history.push('/login')
             })
             .catch(e => {
                 //erro
-                console.log(e)
+                console.log('error',e)
             })
             .then(res => {
                 //sempre executa
-                console.log(res)
+                console.log('always',res)
             })
     }
 

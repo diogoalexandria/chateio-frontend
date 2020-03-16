@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
-import Home from './components/Home';
+import Login from './components/Login';
 import ChatRoom from './components/ChatRoom'
 import Cadastro from './components/Cadastro'
 import { connect } from 'react-redux'
 import { makeStyles, Grid } from '@material-ui/core';
 import logo from './assets/logo.png'
+import {setUserLogged} from './redux/actions'
 
 function App(props) {
   const useStyles = makeStyles({
@@ -20,9 +21,11 @@ function App(props) {
     }
   })
   const classes = useStyles()
+  
 
   if (props.location.pathname === '/') {
-    return <Redirect to='/home' />
+    let index = props.userLogged ? '/chatlist' : '/login'
+    return <Redirect to={index} />
   }
 
   return (
@@ -38,7 +41,7 @@ function App(props) {
         <Grid item>
         <Router>
           <Switch>
-            <Route path="/home" exact component={() => <Home />} />
+            <Route path="/login" exact component={() => <Login />} />
             <Route path="/cadastro" component={()=> <Cadastro />} />
             <Route path="/chatRoom" component={() => <ChatRoom />} />
           </Switch>
@@ -51,5 +54,5 @@ function App(props) {
 }
 
 
-const mapStateToProps = () => ({})
-export default connect(mapStateToProps)(App);
+const mapStateToProps = ({userLogged}) => ({userLogged})
+export default connect(mapStateToProps, setUserLogged)(App);
