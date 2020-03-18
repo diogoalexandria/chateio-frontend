@@ -11,7 +11,6 @@ import {
     makeStyles,
     Button
 } from '@material-ui/core'
-import bcrypt from 'bcrypt'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 
@@ -56,14 +55,10 @@ function Cadastro(props) {
     }
 
     const handleSubmit = e => {
-        // let hashPassword = ""
-        // bcrypt.hash(password, 10, (err,hash) => {
-        //     hashPassword = hash
-        // })
-        // console.log(hashPassword)
+
         const data = {
             "nickname": nickname,
-            // "password": hashPassword,
+            "password": password,
             "email": email
         }
         const axios_url = process.env.REACT_APP_AXIOS_BASE_URL

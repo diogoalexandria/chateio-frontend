@@ -53,31 +53,27 @@ function Home(props) {
 
     const handleSubmit = e => {
         e.preventDefault();
-        // let hashPassword = ""
-        // bcrypt.hash(password, 10, (err,hash) => {
-        //     hashPassword = hash
-        // })
-        // console.log(hashPassword)
+
         let data = {
             nickname: nickname,
-            // password: hashPassword
+            password: password
         }
         let axios_url = process.env.REACT_APP_AXIOS_BASE_URL
         console.log(axios_url)
-        axios.post('http://192.168.1.67:3333/login', data)
-            .then((res) => {
-                //TODO: LOGIN SUCCESSFUL
-                setUserLogged(true)
-                console.log('sucessfull', res)
-            })
-            .catch(res => {
-                //TODO: LOGIN FAILED
-                console.log('failed', res)
-            })
-            .then(res => {
-                //TODO: LOGIN CALLBACK
-                console.log('always', res)
-            })
+        history.push('/chatlist')
+        // axios.post('http://192.168.1.67:3333/login', data)
+        //     .then((res) => {
+        //         //TODO: LOGIN SUCCESSFUL
+        //         console.log('sucessfull', res)
+        //     })
+        //     .catch(res => {
+        //         //TODO: LOGIN FAILED
+        //         console.log('failed', res)
+        //     })
+        //     .then(res => {
+        //         //TODO: LOGIN CALLBACK
+        //         console.log('always', res)
+        //     })
 
     };
     const handleCadastro = e => {

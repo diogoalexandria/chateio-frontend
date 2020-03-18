@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Login from './components/Login';
 import ChatRoom from './components/ChatRoom'
 import Cadastro from './components/Cadastro'
+import ChatList from './components/ChatList'
 import { connect } from 'react-redux'
 import { makeStyles, Grid } from '@material-ui/core';
 import logo from './assets/logo.png'
@@ -43,7 +44,8 @@ function App(props) {
           <Switch>
             <Route path="/login" exact component={() => <Login />} />
             <Route path="/cadastro" component={()=> <Cadastro />} />
-            <Route path="/chatRoom" component={() => <ChatRoom />} />
+            <Route path="/chatlist" component={()=> <ChatList/>} />
+            <Route path="/chatroom" component={() => <ChatRoom />} />
           </Switch>
         </Router>
 
